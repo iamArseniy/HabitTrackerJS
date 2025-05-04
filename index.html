@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Трекер Привычек</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+    <h1>Трекер Привычек</h1>
+    <form id="habit-form">
+        <input type="text" id="habit-name" placeholder="Название привычки" required />
+        <input type="date" id="habit-start" required />
+        <input type="number" id="habit-days" placeholder="Кол-во дней" min="1" required />
+        <button type="submit">Добавить привычку</button>
+    </form>
+
+    <ul id="habit-list"></ul>
+
+    <!-- Модальное окно для работы с датами -->
+    <div id="habit-details-modal" class="modal">
+        <div class="modal-content">
+            <h2>Выбор дней для выполнения привычки</h2>
+            <div id="habit-dates-list"></div>
+            <button id="close-modal">Закрыть</button>
+        </div>
+    </div>
+</div>
+
+<script src="app/model.js"></script>
+<script src="app/view.js"></script>
+<script src="app/controller.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
