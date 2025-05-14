@@ -1,9 +1,15 @@
 const Controller = (() => {
     function init() {
-        View.bindFormSubmit(handleAddHabit);
-        View.bindCloseModal(handleCloseModal);
-        View.renderCalendar();
-        render();
+        if (typeof CalendarView !== 'undefined') {
+            CalendarView.renderCalendar();
+            CalendarView.bindMonthSwitching();
+        }
+
+        if (typeof View !== 'undefined') {
+            View.bindFormSubmit(handleAddHabit);
+            View.bindCloseModal(handleCloseModal);
+            render();
+        }
     }
 
     function handleAddHabit(name, startDate, days) {

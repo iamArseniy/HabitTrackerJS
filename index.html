@@ -13,6 +13,11 @@
                 <a href="create.html">Задачи на сегодня</a>
             </nav>
         </header>
+        <div id="calendar-header">
+            <button id="prev-month">‹</button>
+            <span id="calendar-title">Май 2025</span>
+            <button id="next-month">›</button>
+        </div>
         <table width="100%" border="0" cellpadding="0" cellsacing="0">
             <tr valign="50%">
                 <td width="50%">
@@ -42,28 +47,9 @@
             </tr>
         </table>
     </div>
-        <!-- <h1>Трекер Привычек</h1>
-        <form id="habit-form">
-            <input type="text" id="habit-name" placeholder="Название привычки" required />
-            <input type="date" id="habit-start" required />
-            <input type="number" id="habit-days" placeholder="Кол-во дней" min="1" required />
-            <button type="submit">Добавить привычку</button>
-        </form>
-
-        <ul id="habit-list"></ul>
-
-        Модальное окно для работы с датами 
-        <div id="habit-details-modal" class="modal">
-            <div class="modal-content">
-                <h2>Выбор дней для выполнения привычки</h2>
-                <div id="habit-dates-list"></div>
-                <button id="close-modal">Закрыть</button>
-            </div>
-        </div>
-    </div> -->
 
     <script src="app/model.js"></script>
-    <script src="app/view.js"></script>
+    <script src="app/calendar.js"></script>
     <script src="app/controller.js"></script>
     <script src="main.js"></script>
 </body>
