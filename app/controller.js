@@ -2,6 +2,7 @@ const Controller = (() => {
     function init() {
         View.bindFormSubmit(handleAddHabit);
         View.bindCloseModal(handleCloseModal);
+        View.renderCalendar();
         render();
     }
 

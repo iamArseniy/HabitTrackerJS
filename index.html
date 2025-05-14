@@ -6,30 +6,65 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="app">
-    <h1>Трекер Привычек</h1>
-    <form id="habit-form">
-        <input type="text" id="habit-name" placeholder="Название привычки" required />
-        <input type="date" id="habit-start" required />
-        <input type="number" id="habit-days" placeholder="Кол-во дней" min="1" required />
-        <button type="submit">Добавить привычку</button>
-    </form>
+    <div id="app">
+        <header>
+            <nav>
+                <a href="index.html">Мои привычки</a>
+                <a href="create.html">Задачи на сегодня</a>
+            </nav>
+        </header>
+        <table width="100%" border="0" cellpadding="0" cellsacing="0">
+            <tr valign="50%">
+                <td width="50%">
+                    <section id="calendar">
+                        <div id="calendar-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                    <th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th>Сб</th><th>Вс</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="calendar-body"></tbody>
+                            </table>
+                        </div>
+                    </section>
+                </td>
 
-    <ul id="habit-list"></ul>
-
-    <!-- Модальное окно для работы с датами -->
-    <div id="habit-details-modal" class="modal">
-        <div class="modal-content">
-            <h2>Выбор дней для выполнения привычки</h2>
-            <div id="habit-dates-list"></div>
-            <button id="close-modal">Закрыть</button>
-        </div>
+                <td width="50%">
+                    <section id="task-list">
+                        <h2 id="current-date"></h2>
+                        <ul>
+                            <li><input type="checkbox"> Стакан горячей воды</li>
+                            <li><input type="checkbox" checked> Уборка</li>
+                        </ul>
+                    </section>
+                </td>
+            </tr>
+        </table>
     </div>
-</div>
+        <!-- <h1>Трекер Привычек</h1>
+        <form id="habit-form">
+            <input type="text" id="habit-name" placeholder="Название привычки" required />
+            <input type="date" id="habit-start" required />
+            <input type="number" id="habit-days" placeholder="Кол-во дней" min="1" required />
+            <button type="submit">Добавить привычку</button>
+        </form>
 
-<script src="app/model.js"></script>
-<script src="app/view.js"></script>
-<script src="app/controller.js"></script>
-<script src="main.js"></script>
+        <ul id="habit-list"></ul>
+
+        Модальное окно для работы с датами 
+        <div id="habit-details-modal" class="modal">
+            <div class="modal-content">
+                <h2>Выбор дней для выполнения привычки</h2>
+                <div id="habit-dates-list"></div>
+                <button id="close-modal">Закрыть</button>
+            </div>
+        </div>
+    </div> -->
+
+    <script src="app/model.js"></script>
+    <script src="app/view.js"></script>
+    <script src="app/controller.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
