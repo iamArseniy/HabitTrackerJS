@@ -10,19 +10,22 @@ const View = (() => {
 
     function renderHabits(habits) {
         habitList.innerHTML = '';
-        habits.forEach((habit, habitIndex) => {
+        habits.forEach((habit, index) => {
             const li = document.createElement('li');
-            li.className = 'habit-item';
-            const title = document.createElement('div');
-            title.textContent = habit.name;
-            title.style.cursor = 'pointer';
-            title.addEventListener('click', () => {
-                Controller.handleHabitClick(habitIndex);
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = habit.done;
+
+            checkbox.addEventListener('change', () => {
+                Controller.handleToggleDate(index);
             });
-            li.appendChild(title);
+
+            li.appendChild(checkbox);
+            li.append(` ${habit.name}`);
             habitList.appendChild(li);
         });
     }
+
 
     function renderHabitDetails(habit) {
         habitDatesList.innerHTML = '';
@@ -42,6 +45,7 @@ const View = (() => {
     }
 
     function bindFormSubmit(handler) {
+        if (!habitForm) return; 
         habitForm.addEventListener('submit', e => {
             e.preventDefault();
             handler(habitName.value, habitStart.value, parseInt(habitDays.value));
@@ -52,6 +56,7 @@ const View = (() => {
     }
 
     function bindCloseModal(handler) {
+        if (!closeModalButton) return;    
         closeModalButton.addEventListener('click', () => {
             habitDetailsModal.style.display = 'none';
         });

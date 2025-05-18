@@ -5,34 +5,37 @@
     <title>Создание привычки</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <header>
-        <nav>
-            <a href="index.html">Мои привычки</a>
-            <a href="create.html">Создать привычку</a>
-        </nav>
-    </header>
-    <main>
-        <h1>Создание привычки</h1>
-        <form id="habit-form">
-            <input type="text" id="habit-name" placeholder="Название привычки" required />
-            <input type="date" id="habit-start" required />
-            <input type="number" id="habit-days" placeholder="Кол-во дней" min="1" required />
-            <button type="submit">Добавить привычку</button>
-        </form>
-        <ul id="habit-list"></ul>
-        <div id="habit-details-modal" class="modal">
-        <div class="modal-content">
-            <h2>Выбор дней для выполнения привычки</h2>
-            <div id="habit-dates-list"></div>
-            <button id="close-modal">Закрыть</button>
-        </div>
-    </div>
-    </main>
 
-    <script src="app/model.js"></script>
-    <script src="app/view.js"></script>
-    <script src="app/controller.js"></script>
-    <script src="main.js"></script>
+<body>
+    <div id="app">
+        <header>
+            <nav>
+                <a href="index.html">Мои привычки</a>
+                <a href="create.html">Создать привычку</a>
+            </nav>
+        </header>
+        <main>
+            <h1>Создание привычки</h1>
+            <form id="habit-form">
+                <input type="text" id="habit-name" placeholder="Название привычки" required />
+                <input type="date" id="habit-start" required />
+                <input type="number" id="habit-days" placeholder="Кол-во дней" min="1" required />
+                <button type="submit">Добавить привычку</button>
+            </form>
+            <ul id="habit-list" style="list-style: none; padding-left: 0;"></ul>
+            <div id="habit-details-modal" class="modal">
+            <div class="modal-content">
+                <h2>Выбор дней для выполнения привычки</h2>
+                <div id="habit-dates-list"></div>
+                <button id="close-modal">Закрыть</button>
+            </div>
+        </div>
+        </main>
+
+        <script src="app/model.js"></script>
+        <script src="app/view.js"></script>
+        <script src="app/controller.js"></script>
+        <script src="main.js"></script>
+    </div>
 </body>
 </html>
