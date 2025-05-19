@@ -15,14 +15,41 @@
             </nav>
         </header>
         <main>
-            <h1>Создание привычки</h1>
-            <form id="habit-form">
-                <input type="text" id="habit-name" placeholder="Название привычки" required />
-                <input type="date" id="habit-start" required />
-                <input type="number" id="habit-days" placeholder="Кол-во дней" min="1" required />
-                <button type="submit">Добавить привычку</button>
-            </form>
-            <ul id="habit-list" style="list-style: none; padding-left: 0;"></ul>
+            <table width="100%">
+                <tr valign="top">
+                    <td width="50%">
+                        <h2>Мои привычки</h2>
+                        <ul id="habit-list" style="list-style: none; padding-left: 0;"></ul>
+                    </td>
+
+                    <td width="50%">
+                        <h2>Создать привычку</h2>
+                        <form id="habit-form">
+                            <div>
+                                <label for="habit-name">Название:</label><br>
+                                <input type="text" id="habit-name" placeholder="Введите название" required />
+                            </div>
+                            <div>
+                                <label for="habit-desc">Описание:</label><br>
+                                <input type="text" id="habit-desc" placeholder="Введите описание" required />
+                            </div>
+                            <div>
+                                <label for="habit-start">Дата начала:</label><br>
+                                <input type="date" id="habit-start" required />
+                            </div>
+                            <div>
+                                <label for="habit-days">Количество дней:</label><br>
+                                <input type="number" id="habit-days" placeholder="Количество дней" min="1" required />
+                            </div>
+                            <div>
+                                <button type="submit">Добавить привычку</button>
+                            </div>
+                        </form>
+
+
+                    </td>
+                </tr>
+            </table>
             <div id="habit-details-modal" class="modal">
             <div class="modal-content">
                 <h2>Выбор дней для выполнения привычки</h2>

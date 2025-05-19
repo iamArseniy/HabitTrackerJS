@@ -1,9 +1,15 @@
 let habitData = JSON.parse(localStorage.getItem('habitData')) || {};
 
+let habitDefinitions = JSON.parse(localStorage.getItem('habitDefinitions')) || {};
+
+function saveDefinitions() {
+  localStorage.setItem('habitDefinitions', JSON.stringify(habitDefinitions));
+}
+
+
 function saveHabits() {
   localStorage.setItem('habitData', JSON.stringify(habitData));
 }
-
 
 function generateId() {
   return 'habit-' + Math.random().toString(36).slice(2, 11);
@@ -16,14 +22,14 @@ function getAllHabits() {
       if (!unique.has(habit.id)) {
         unique.set(habit.id, {
           id: habit.id,
-          name: habit.name
+          name: habit.name,
+          description: habit.description
         });
       }
     }
   }
   return Array.from(unique.values());
 }
-
 
 function addHabitToDates(habit, dateList) {
   const id = generateId();
@@ -41,6 +47,8 @@ function addHabitToDates(habit, dateList) {
   saveHabits();
 }
 
+
+
 function getHabitById(id) {
   const result = [];
   for (const date in habitData) {
@@ -52,6 +60,7 @@ function getHabitById(id) {
   }
   return result;
 }
+
 
 function getHabitsByDate(date) {
   return habitData[date] || [];

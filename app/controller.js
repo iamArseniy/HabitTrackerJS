@@ -5,18 +5,22 @@ const Controller = (() => {
         if (typeof CalendarView !== 'undefined') {
             CalendarView.renderCalendar();
             CalendarView.bindMonthSwitching(setActiveDate);
-            render();
+            if (window.location.pathname.includes('index.html')) {
+                render();
+            }
         }
 
         if (typeof View !== 'undefined') {
-            View.bindFormSubmit(handleAddHabit);
-            View.bindCloseModal(handleCloseModal);
+        View.bindFormSubmit(handleAddHabit);
+        View.bindCloseModal(handleCloseModal);
+        if (window.location.pathname.includes('create.html')) {
             renderCreate();
         }
+    }
         
     }
 
-    function handleAddHabit(name, startDateStr, days) {
+    function handleAddHabit(name, description, startDateStr, days) {
         const dateList = [];
         const startDate = new Date(startDateStr);
 
@@ -28,11 +32,11 @@ const Controller = (() => {
 
         const habit = {
             name: name,
-            description: "" 
+            description: description
         };
 
         Model.addHabitToDates(habit, dateList);
-        render();
+        renderCreate();
     }
 
     function handleHabitClick(index) {
@@ -43,6 +47,7 @@ const Controller = (() => {
         View.renderHabitDetails({
         id:    habit.id,
         name:  habit.name,
+        description: habit.description,
         dates: habitDates
         });
     }
@@ -55,16 +60,21 @@ const Controller = (() => {
         render();
     }
 
-    // Переключение статуса прямо в модалке 
     function handleToggleHabitDate(dateStr, habitId) {
         Model.toggleHabitStatus(dateStr, habitId);
         const updatedDates = Model.getHabitById(habitId);
+
+        const allHabits = Model.getAllHabits();
+        const habit = allHabits.find(h => h.id === habitId);
+
         View.renderHabitDetails({
             id: habitId,
-            name: habitId,
+            name: habit?.name || '',
+            description: habit?.description || '',
             dates: updatedDates
         });
     }
+
     
     function handleCloseModal() {
         render();
@@ -86,7 +96,11 @@ const Controller = (() => {
     function handleToggleHabitToday(habitId) {
         const today = new Date().toISOString().split('T')[0];
         Model.toggleHabitStatus(today, habitId);
-        render();
+        if (window.location.pathname.includes('create.html')) {
+            renderCreate();
+        } else {
+            render();
+        }
     }
 
     function setActiveDate(dateStr) {

@@ -1,6 +1,7 @@
 const View = (() => {
     const habitForm = document.getElementById('habit-form');
     const habitName = document.getElementById('habit-name');
+    const habitDesc = document.getElementById('habit-desc');
     const habitStart = document.getElementById('habit-start');
     const habitDays = document.getElementById('habit-days');
     const habitList = document.getElementById('habit-list');
@@ -14,26 +15,21 @@ const View = (() => {
 
         habits.forEach((habit, index) => {
             const li = document.createElement('li');
-
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.checked = !!statusMap[habit.id];
-            checkbox.addEventListener('change', () => {
-                // Если на странице календаря — переключаем по индексу
-                if (window.location.pathname.includes('index.html')) {
+            if (window.location.pathname.includes('index.html')) {
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = !!statusMap[habit.id];
+                checkbox.addEventListener('change', () => {
                     Controller.handleToggleDate(index);
-                } else {
-                    Controller.handleToggleHabitToday(habit.id);
-                }
-            });
-
-            li.appendChild(checkbox);
+                });
+                li.appendChild(checkbox);
+            }
 
             const title = document.createElement('span');
             title.textContent = ` ${habit.name}`;
             title.style.cursor = 'pointer';
             title.addEventListener('click', () => {
-            Controller.handleHabitClick(index);
+                Controller.handleHabitClick(index);
             });
 
             li.appendChild(title);
@@ -41,9 +37,21 @@ const View = (() => {
         });
     }
 
+
     function renderHabitDetails(habit) {
         if (!habit || !Array.isArray(habit.dates)) return;
         habitDatesList.innerHTML = '';
+        
+        const modalContent = habitDetailsModal.querySelector('.modal-content');
+        modalContent.innerHTML = `
+            <h2>${habit.name}</h2>
+            <p>${habit.description || ''}</p>
+            <div id="habit-dates-list"></div>
+            <button id="close-modal">Закрыть</button>
+        `;
+
+        const datesContainer = modalContent.querySelector('#habit-dates-list');
+        const closeButton = modalContent.querySelector('#close-modal');
 
         habit.dates.forEach(dateObj => {
             const label = document.createElement('label');
@@ -51,18 +59,21 @@ const View = (() => {
             checkbox.type = 'checkbox';
             checkbox.checked = dateObj.done;
             checkbox.addEventListener('change', () => {
-            Controller.handleToggleHabitDate(dateObj.date, habit.id);
+                Controller.handleToggleHabitDate(dateObj.date, habit.id);
             });
 
             label.appendChild(checkbox);
-            label.appendChild(document.createTextNode(
-            ` ${formatDateToRussian(dateObj.date)}`
-            ));
-            habitDatesList.appendChild(label);
+            label.appendChild(document.createTextNode(` ${formatDateToRussian(dateObj.date)}`));
+            datesContainer.appendChild(label);
+        });
+
+        closeButton.addEventListener('click', () => {
+            habitDetailsModal.style.display = 'none';
         });
 
         habitDetailsModal.style.display = 'block';
     }
+
 
     function formatDateToRussian(dateStr) {
         const d = new Date(dateStr);
@@ -73,8 +84,9 @@ const View = (() => {
         if (!habitForm) return; 
         habitForm.addEventListener('submit', e => {
             e.preventDefault();
-            handler(habitName.value, habitStart.value, parseInt(habitDays.value));
+            handler(habitName.value, habitDesc.value, habitStart.value, parseInt(habitDays.value));
             habitName.value = '';
+            habitDesc.value = '';
             habitStart.value = '';
             habitDays.value = '';
         });
@@ -86,7 +98,6 @@ const View = (() => {
             habitDetailsModal.style.display = 'none';
         });
     }
-
 
     return {
         renderHabits,
