@@ -8,40 +8,65 @@ const View = (() => {
     const habitDatesList = document.getElementById('habit-dates-list');
     const closeModalButton = document.getElementById('close-modal');
 
-    function renderHabits(habits) {
+    function renderHabits(habits, statusMap = {}) {
+        if (!habitList) return;
         habitList.innerHTML = '';
+
         habits.forEach((habit, index) => {
             const li = document.createElement('li');
+
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
-            checkbox.checked = habit.done;
-
+            checkbox.checked = !!statusMap[habit.id];
             checkbox.addEventListener('change', () => {
-                Controller.handleToggleDate(index);
+                // Если на странице календаря — переключаем по индексу
+                if (window.location.pathname.includes('index.html')) {
+                    Controller.handleToggleDate(index);
+                } else {
+                    Controller.handleToggleHabitToday(habit.id);
+                }
             });
 
             li.appendChild(checkbox);
-            li.append(` ${habit.name}`);
+
+            const title = document.createElement('span');
+            title.textContent = ` ${habit.name}`;
+            title.style.cursor = 'pointer';
+            title.addEventListener('click', () => {
+            Controller.handleHabitClick(index);
+            });
+
+            li.appendChild(title);
             habitList.appendChild(li);
         });
     }
 
-
     function renderHabitDetails(habit) {
+        if (!habit || !Array.isArray(habit.dates)) return;
         habitDatesList.innerHTML = '';
-        habit.dates.forEach((dateObj, dateIndex) => {
+
+        habit.dates.forEach(dateObj => {
             const label = document.createElement('label');
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.checked = dateObj.done;
             checkbox.addEventListener('change', () => {
-                Controller.handleToggleDate(habitIndex, dateIndex);
+            Controller.handleToggleHabitDate(dateObj.date, habit.id);
             });
+
             label.appendChild(checkbox);
-            label.appendChild(document.createTextNode(` ${dateObj.date}`));
+            label.appendChild(document.createTextNode(
+            ` ${formatDateToRussian(dateObj.date)}`
+            ));
             habitDatesList.appendChild(label);
         });
+
         habitDetailsModal.style.display = 'block';
+    }
+
+    function formatDateToRussian(dateStr) {
+        const d = new Date(dateStr);
+        return `${d.getDate()} ${d.toLocaleString('ru-RU', { month: 'long' })}`;
     }
 
     function bindFormSubmit(handler) {
@@ -67,6 +92,6 @@ const View = (() => {
         renderHabits,
         renderHabitDetails,
         bindFormSubmit,
-        bindCloseModal
+        bindCloseModal 
     };
 })();
