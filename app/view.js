@@ -8,31 +8,61 @@ const View = (() => {
     const habitDetailsModal = document.getElementById('habit-details-modal');
     const habitDatesList = document.getElementById('habit-dates-list');
     const closeModalButton = document.getElementById('close-modal');
+    const habitIcon = document.getElementById('habit-icon');
 
     function renderHabits(habits, statusMap = {}) {
         if (!habitList) return;
         habitList.innerHTML = '';
 
-        habits.forEach((habit, index) => {
+        const isCreatePage = window.location.pathname.includes('create.html');
+
+        const filterSelect = document.getElementById('filter-select');
+        const filterValue = filterSelect ? filterSelect.value : 'all';
+
+        const filteredHabits = habits.filter(habit => {
+            const done = !!statusMap[habit.id];
+            if (filterValue === 'done') return done;
+            if (filterValue === 'not-done') return !done;
+            return true;
+        });
+
+        filteredHabits.forEach(habit => {
             const li = document.createElement('li');
-            if (window.location.pathname.includes('index.html')) {
+
+            if (!isCreatePage) {
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
                 checkbox.checked = !!statusMap[habit.id];
                 checkbox.addEventListener('change', () => {
-                    Controller.handleToggleDate(index);
+                    Controller.handleToggleHabitToday(habit.id);
                 });
                 li.appendChild(checkbox);
             }
 
+            console.log("icon:", habit.icon, "emoji:", getIconEmoji(habit.icon));
+            const iconSpan = document.createElement('span');
+            iconSpan.textContent = habit.icon ? getIconEmoji(habit.icon) + ' ' : '';
+            li.appendChild(iconSpan);
+
             const title = document.createElement('span');
-            title.textContent = ` ${habit.name}`;
+            title.textContent =  `${habit.name}`;
             title.style.cursor = 'pointer';
             title.addEventListener('click', () => {
-                Controller.handleHabitClick(index);
+                Controller.handleHabitClickById(habit.id);
             });
 
             li.appendChild(title);
+
+            if (isCreatePage) {
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Удалить';
+                deleteBtn.style.marginLeft = '10px';
+                deleteBtn.addEventListener('click', () => {
+                    Controller.handleDeleteHabit(habit.id);
+                });
+                li.appendChild(deleteBtn);
+            }
+
             habitList.appendChild(li);
         });
     }
@@ -41,7 +71,7 @@ const View = (() => {
     function renderHabitDetails(habit) {
         if (!habit || !Array.isArray(habit.dates)) return;
         habitDatesList.innerHTML = '';
-        
+
         const modalContent = habitDetailsModal.querySelector('.modal-content');
         modalContent.innerHTML = `
             <h2>${habit.name}</h2>
@@ -81,28 +111,50 @@ const View = (() => {
     }
 
     function bindFormSubmit(handler) {
-        if (!habitForm) return; 
+        if (!habitForm) return;
         habitForm.addEventListener('submit', e => {
             e.preventDefault();
-            handler(habitName.value, habitDesc.value, habitStart.value, parseInt(habitDays.value));
+            handler(
+                habitName.value,
+                habitDesc.value,
+                habitStart.value,
+                parseInt(habitDays.value),
+                habitIcon.value
+            );
             habitName.value = '';
             habitDesc.value = '';
             habitStart.value = '';
             habitDays.value = '';
+            habitIcon.value = 'cleaning';
         });
     }
 
+
     function bindCloseModal(handler) {
-        if (!closeModalButton) return;    
+        if (!closeModalButton) return;
         closeModalButton.addEventListener('click', () => {
             habitDetailsModal.style.display = 'none';
         });
     }
+    function getIconEmoji(icon) {
+        const map = {
+            cleaning: '🧹',
+            fitness: '🏃‍♂️',
+            water: '💧',
+            nutrition: '🥗',
+            reading: '📚',
+            sleep: '💤',
+            meditation: '🧘‍♀️',
+            work: '💼'
+        };
+        return map[icon] || '';
+    }
+
 
     return {
         renderHabits,
         renderHabitDetails,
         bindFormSubmit,
-        bindCloseModal 
+        bindCloseModal
     };
 })();

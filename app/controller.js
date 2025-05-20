@@ -2,6 +2,13 @@ const Controller = (() => {
     let activeDate = new Date().toISOString().split('T')[0];
 
     function init() {
+        const filterSelect = document.getElementById('filter-select');
+        if (filterSelect && window.location.pathname.includes('index.html')) {
+            filterSelect.addEventListener('change', () => {
+                render();
+            });
+        }
+
         if (typeof CalendarView !== 'undefined') {
             CalendarView.renderCalendar();
             CalendarView.bindMonthSwitching(setActiveDate);
@@ -11,16 +18,16 @@ const Controller = (() => {
         }
 
         if (typeof View !== 'undefined') {
-        View.bindFormSubmit(handleAddHabit);
-        View.bindCloseModal(handleCloseModal);
-        if (window.location.pathname.includes('create.html')) {
-            renderCreate();
+            View.bindFormSubmit(handleAddHabit);
+            View.bindCloseModal(handleCloseModal);
+            if (window.location.pathname.includes('create.html')) {
+                renderCreate();
+            }
         }
-    }
-        
+
     }
 
-    function handleAddHabit(name, description, startDateStr, days) {
+    function handleAddHabit(name, description, startDateStr, days, icon) {
         const dateList = [];
         const startDate = new Date(startDateStr);
 
@@ -32,7 +39,8 @@ const Controller = (() => {
 
         const habit = {
             name: name,
-            description: description
+            description: description,
+            icon:icon,
         };
 
         Model.addHabitToDates(habit, dateList);
@@ -41,14 +49,14 @@ const Controller = (() => {
 
     function handleHabitClick(index) {
         const habits = Model.getAllHabits();
-        const habit = habits[index];         
-        const habitDates = Model.getHabitById(habit.id); 
+        const habit = habits[index];
+        const habitDates = Model.getHabitById(habit.id);
 
         View.renderHabitDetails({
-        id:    habit.id,
-        name:  habit.name,
-        description: habit.description,
-        dates: habitDates
+            id:    habit.id,
+            name:  habit.name,
+            description: habit.description,
+            dates: habitDates
         });
     }
 
@@ -75,7 +83,7 @@ const Controller = (() => {
         });
     }
 
-    
+
     function handleCloseModal() {
         render();
     }
@@ -94,8 +102,8 @@ const Controller = (() => {
     }
 
     function handleToggleHabitToday(habitId) {
-        const today = new Date().toISOString().split('T')[0];
-        Model.toggleHabitStatus(today, habitId);
+        const date = getActiveDate();
+        Model.toggleHabitStatus(date, habitId);
         if (window.location.pathname.includes('create.html')) {
             renderCreate();
         } else {
@@ -112,6 +120,29 @@ const Controller = (() => {
         return activeDate;
     }
 
+    function handleDeleteHabit(habitId) {
+        Model.deleteHabitById(habitId);
+
+        if (window.location.pathname.includes('create.html')) {
+            renderCreate();
+        } else {
+            render();
+        }
+    }
+    function handleHabitClickById(id) {
+        const allHabits = Model.getAllHabits();
+        const habit = allHabits.find(h => h.id === id);
+        const habitDates = Model.getHabitById(id);
+
+        if (!habit) return;
+
+        View.renderHabitDetails({
+            id: habit.id,
+            name: habit.name,
+            description: habit.description,
+            dates: habitDates
+        });
+    }
     return {
         init,
         handleToggleDate,
@@ -120,6 +151,8 @@ const Controller = (() => {
         setActiveDate,
         getActiveDate,
         handleToggleHabitDate,
-        handleToggleHabitToday
+        handleToggleHabitToday,
+        handleDeleteHabit,
+        handleHabitClickById
     };
 })();

@@ -7,62 +7,76 @@
 </head>
 
 <body>
-    <div id="app">
-        <header>
-            <nav>
-                <a href="index.html">Мои привычки</a>
-                <a href="create.html">Создать привычку</a>
-            </nav>
-        </header>
-        <main>
-            <table width="100%">
-                <tr valign="top">
-                    <td width="50%">
-                        <h2>Мои привычки</h2>
-                        <ul id="habit-list" style="list-style: none; padding-left: 0;"></ul>
-                    </td>
+<div id="app">
+    <header>
+        <nav>
+            <a href="index.html">Задачи на день</a>
+            <a href="create.html">Мои привычки</a>
+        </nav>
+    </header>
+    <main>
+        <table width="100%">
+            <tr valign="top">
+                <td width="50%">
+                    <h2>Мои привычки</h2>
+                    <ul id="habit-list" style="list-style: none; padding-left: 0;"></ul>
+                </td>
 
-                    <td width="50%">
-                        <h2>Создать привычку</h2>
-                        <form id="habit-form">
-                            <div>
-                                <label for="habit-name">Название:</label><br>
-                                <input type="text" id="habit-name" placeholder="Введите название" required />
-                            </div>
-                            <div>
-                                <label for="habit-desc">Описание:</label><br>
-                                <input type="text" id="habit-desc" placeholder="Введите описание" required />
-                            </div>
-                            <div>
-                                <label for="habit-start">Дата начала:</label><br>
-                                <input type="date" id="habit-start" required />
-                            </div>
-                            <div>
-                                <label for="habit-days">Количество дней:</label><br>
-                                <input type="number" id="habit-days" placeholder="Количество дней" min="1" required />
-                            </div>
-                            <div>
-                                <button type="submit">Добавить привычку</button>
-                            </div>
-                        </form>
+                <td width="50%">
+                    <h2>Создать привычку</h2>
+                    <form id="habit-form">
+                        <div>
+                            <label for="habit-name">Название:</label><br>
+                            <input type="text" id="habit-name" placeholder="Введите название" required />
+                        </div>
+                        <div>
+                            <label for="habit-desc">Описание:</label><br>
+                            <input type="text" id="habit-desc" placeholder="Введите описание" required />
+                        </div>
+                        <div>
+                            <label for="habit-icon">Категория:</label>
+                            <select id="habit-icon">
+                                <option value="cleaning">🧹 Уборка</option>
+                                <option value="fitness">🏃‍♂️ Спорт</option>
+                                <option value="water">💧 Вода</option>
+                                <option value="nutrition">🥗 Питание</option>
+                                <option value="reading">📚 Чтение</option>
+                                <option value="sleep">💤 Сон</option>
+                                <option value="meditation">🧘‍♀️ Медитация</option>
+                                <option value="work">💼 Работа / Учёба</option>
+                            </select>
+
+                        </div>
+                        <div>
+                            <label for="habit-start">Дата начала:</label><br>
+                            <input type="date" id="habit-start" required />
+                        </div>
+                        <div>
+                            <label for="habit-days">Количество дней:</label><br>
+                            <input type="number" id="habit-days" placeholder="Количество дней" min="1" required />
+                        </div>
+                        <div>
+                            <button type="submit">Добавить привычку</button>
+                        </div>
+                    </form>
 
 
-                    </td>
-                </tr>
-            </table>
-            <div id="habit-details-modal" class="modal">
+                </td>
+            </tr>
+        </table>
+        <div id="habit-details-modal" class="modal">
             <div class="modal-content">
                 <h2>Выбор дней для выполнения привычки</h2>
                 <div id="habit-dates-list"></div>
                 <button id="close-modal">Закрыть</button>
             </div>
         </div>
-        </main>
+    </main>
 
-        <script src="app/model.js"></script>
-        <script src="app/view.js"></script>
-        <script src="app/controller.js"></script>
-        <script src="main.js"></script>
-    </div>
+    <script src="app/model.js"></script>
+    <script src="app/view.js"></script>
+    <script src="app/controller.js"></script>
+    <script src="main.js"></script>
+</div>
 </body>
 </html>

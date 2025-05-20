@@ -36,8 +36,18 @@
                 </td>
 
                 <td width="50%">
+
                     <section id="task-list">
                         <h2 id="current-date"></h2>
+                        <div id="habit-filter">
+                            <label for="filter-select">Фильтр:</label>
+                            <select id="filter-select">
+                                <option value="all">Все</option>
+                                <option value="done">Сделанные</option>
+                                <option value="not-done">Не сделанные</option>
+                            </select>
+                        </div>
+
                         <ul id="habit-list" style="list-style: none; padding-left: 0;"></ul>
                         
                     </section>

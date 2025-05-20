@@ -23,7 +23,8 @@ function getAllHabits() {
         unique.set(habit.id, {
           id: habit.id,
           name: habit.name,
-          description: habit.description
+          description: habit.description,
+          icon: habit.icon || ""
         });
       }
     }
@@ -40,6 +41,7 @@ function addHabitToDates(habit, dateList) {
       id,
       name: habit.name,
       description: habit.description || "",
+      icon: habit.icon || "",
       done: false
     });
   });
@@ -85,6 +87,15 @@ function getTodayStatusMap(date) {
   return result;
 }
 
+function deleteHabitById(habitId) {
+  for (const date in habitData) {
+    habitData[date] = habitData[date].filter(habit => habit.id !== habitId);
+    if (habitData[date].length === 0) {
+      delete habitData[date];
+    }
+  }
+  saveHabits();
+}
 
 const Model = {
   addHabitToDates,
@@ -92,5 +103,6 @@ const Model = {
   getHabitById,
   toggleHabitStatus,
   getAllHabits,
-  getTodayStatusMap
+  getTodayStatusMap,
+  deleteHabitById
 };
