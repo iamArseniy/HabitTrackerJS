@@ -55,11 +55,18 @@ const View = (() => {
 
             if (isCreatePage) {
                 const deleteBtn = document.createElement('button');
-                deleteBtn.textContent = 'Удалить';
-                deleteBtn.style.marginLeft = '10px';
+                deleteBtn.classList.add('delete-button');
+                deleteBtn.innerHTML = `
+    <svg class="trash-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+         viewBox="0 0 24 24">
+        <path d="M3 6h18v2H3zm2 3h14l-1.5 12.5a1 1 0 0 1-1 .5H7.5a1 1 0 0 1-1-.5L5 9zm5 2v8h2v-8H10zm4 0v8h2v-8h-2zM9 4V2h6v2h5v2H4V4h5z"/>
+    </svg>
+`;
+                deleteBtn.title = 'Удалить привычку';
                 deleteBtn.addEventListener('click', () => {
                     Controller.handleDeleteHabit(habit.id);
                 });
+
                 li.appendChild(deleteBtn);
             }
 
@@ -74,14 +81,19 @@ const View = (() => {
 
         const modalContent = habitDetailsModal.querySelector('.modal-content');
         modalContent.innerHTML = `
-            <h2>${habit.name}</h2>
-            <p>${habit.description || ''}</p>
-            <div id="habit-dates-list"></div>
-            <button id="close-modal">Закрыть</button>
-        `;
+    <span class="close-button">&times;</span>
+    <h2 class="modal-title">${habit.name}</h2>
+    <p>${habit.description || ''}</p>
+    <div id="habit-dates-list"></div>
+`;
+
 
         const datesContainer = modalContent.querySelector('#habit-dates-list');
-        const closeButton = modalContent.querySelector('#close-modal');
+        const closeButton = modalContent.querySelector('.close-button');
+        closeButton.addEventListener('click', () => {
+            habitDetailsModal.style.display = 'none';
+        });
+
 
         habit.dates.forEach(dateObj => {
             const label = document.createElement('label');

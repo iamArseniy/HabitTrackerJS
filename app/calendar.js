@@ -51,30 +51,44 @@ const CalendarView = (() => {
         let nextMonthDay = 1;
         let row = document.createElement('tr');
 
-        //Дни предыдущего месяца
+        const today = new Date();
+
+        // Предыдущий месяц
         for (let i = 0; i < startIndex; i++) {
             const td = document.createElement('td');
             td.textContent = daysInPrevMonth - startIndex + i + 1;
-            td.style.opacity = '0.3';
+            td.classList.add('inactive');
             row.appendChild(td);
         }
 
-        // Дни текущего месяца
+        // Текущий месяц
         for (let day = 1; day <= daysInMonth; day++) {
             if (row.children.length === 7) {
                 tbody.appendChild(row);
                 row = document.createElement('tr');
             }
+
             const td = document.createElement('td');
             td.textContent = day;
             td.dataset.day = day;
 
-            //обработчик клика в календаре для переключения дня
-            td.addEventListener('click', () => {
-                const year = currentDate.getFullYear();
-                const month = currentDate.getMonth();
-                const clickedDate = new Date(year, month, day);
+            // текущий день
+            if (
+                day === today.getDate() &&
+                month === today.getMonth() &&
+                year === today.getFullYear()
+            ) {
+                td.classList.add('today', 'selected'); // по умолчанию выделяем
+            }
 
+            td.addEventListener('click', () => {
+                document.querySelectorAll('#calendar-container td').forEach(cell => {
+                    cell.classList.remove('selected');
+                });
+
+                td.classList.add('selected');
+
+                const clickedDate = new Date(year, month, day);
                 const yearStr = clickedDate.getFullYear();
                 const monthStr = String(clickedDate.getMonth() + 1).padStart(2, '0');
                 const dayStr = String(clickedDate.getDate()).padStart(2, '0');
@@ -84,15 +98,14 @@ const CalendarView = (() => {
                 renderSidebarDate();
             });
 
-
             row.appendChild(td);
         }
 
-        //Дни следующего месяца
+        // Следующий месяц
         while (row.children.length < 7) {
             const td = document.createElement('td');
             td.textContent = nextMonthDay++;
-            td.style.opacity = '0.3';
+            td.classList.add('inactive');
             row.appendChild(td);
         }
 
@@ -119,6 +132,7 @@ const CalendarView = (() => {
             renderCalendar();
         });
     }
+
 
     return {
         renderCalendar,

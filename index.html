@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Трекер Привычек</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <div id="app">
@@ -13,25 +13,29 @@
                 <a href="create.html">Мои привычки</a>
             </nav>
         </header>
-        <div id="calendar-header">
-            <button id="prev-month">‹</button>
-            <span id="calendar-title">Май 2025</span>
-            <button id="next-month">›</button>
-        </div>
         <table width="100%" border="0" cellpadding="0" cellsacing="0">
             <tr valign="50%">
                 <td width="50%">
                     <section id="calendar">
                         <div id="calendar-container">
+                            <div id="calendar-header">
+                                <span id="calendar-title">Май 2025</span>
+                                <div class="calendar-nav-buttons">
+                                    <button id="prev-month">&lt;</button>
+                                    <button id="next-month">&gt;</button>
+                                </div>
+                            </div>
+
                             <table>
                                 <thead>
-                                    <tr>
+                                <tr>
                                     <th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th>Сб</th><th>Вс</th>
-                                    </tr>
+                                </tr>
                                 </thead>
                                 <tbody id="calendar-body"></tbody>
                             </table>
                         </div>
+
                     </section>
                 </td>
 
