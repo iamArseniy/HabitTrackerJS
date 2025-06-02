@@ -184,7 +184,7 @@ td {
 }
 
 /* Адаптивная верстка */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     table {
         display: block;
         width: 100%;
@@ -212,7 +212,7 @@ td {
         font-size: 14px;
         padding: 10px 16px;
     }
-}
+} */
 
 
 /* Подсветка при наведении */
@@ -266,4 +266,68 @@ td {
     outline: none;
     border-color: #4e7c4f;
     box-shadow: 0 0 4px rgba(78, 124, 79, 0.3);
+}
+
+@media (max-width: 768px) {
+  /* Фикс для календаря */
+  #calendar-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; 
+    margin-right: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    
+  }
+
+  #calendar-container th,
+  #calendar-container td {
+    display: table-cell;
+    width: auto; 
+    height: 40px;
+    padding: 0px;
+  }
+
+  /* Остальные элементы */
+  #app {
+    padding: 20px;
+    margin: 5px auto;
+  }
+
+    td {
+        display: block;
+        width: 105%;
+    }
+
+    #calendar-container {
+        margin: auto;
+        margin-bottom: 30px;
+    }
+
+    #task-list {
+        padding-left: 0px;
+        width: 95%;
+        margin-left: clamp(-20px, -2vw, 0);
+    }
+
+    #calendar-header {
+        font-size: 18px;
+    }
+
+    nav a {
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
+        padding: 12px 6px;
+        font-size: 15px;
+    }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 400px) {
+  #calendar-container th,
+  #calendar-container td {
+    height: 35px;
+    min-width: 35px;
+    font-size: 12px;
+  }
 }

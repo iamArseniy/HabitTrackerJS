@@ -240,6 +240,7 @@ main table {
     flex-direction: column;
     gap: 8px;
 }
+
 .delete-button {
     background: transparent;
     border: none;
@@ -257,4 +258,73 @@ main table {
 
 .delete-button:hover .trash-icon {
     fill: #d00;
+}
+
+/* Мобильные стили для create.html */
+@media (max-width: 768px) {
+    #app {
+        padding: 20px;
+        margin: 5px auto;
+        font-size: 18px;
+    }
+    
+    main table {
+        display: block;
+    }
+    
+    main tr {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    main td {
+        display: block;
+        width: 100%;      
+    }
+    
+
+    #habit-form div {
+        margin-bottom: 12px;
+    }
+    
+    nav {
+        flex-wrap: wrap;
+        gap:12px;
+        justify-content: center;
+    }
+    
+    nav a {
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
+        padding: 12px 6px;
+        font-size: 15px;
+    }
+    
+    .modal-content {
+        margin: 20% auto;
+        width: 80%;
+        font-size: 20px;
+    }
+
+    .modal-content h2{
+        font-size: 25px;
+    }
+
+} 
+
+@media (max-width: 480px) {
+    #habit-list li {
+        font-size: 16px;
+        padding: 12px;
+    }
+    
+    button {
+        width: 100%;
+    }
+
+    .delete-button{
+        width: auto;
+    }
 }
