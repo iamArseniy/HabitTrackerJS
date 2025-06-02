@@ -53,7 +53,6 @@ const CalendarView = (() => {
 
         const today = new Date();
 
-        // Предыдущий месяц
         for (let i = 0; i < startIndex; i++) {
             const td = document.createElement('td');
             td.textContent = daysInPrevMonth - startIndex + i + 1;
@@ -61,7 +60,6 @@ const CalendarView = (() => {
             row.appendChild(td);
         }
 
-        // Текущий месяц
         for (let day = 1; day <= daysInMonth; day++) {
             if (row.children.length === 7) {
                 tbody.appendChild(row);
@@ -72,7 +70,6 @@ const CalendarView = (() => {
             td.textContent = day;
             td.dataset.day = day;
 
-            // текущий день
             if (
                 day === today.getDate() &&
                 month === today.getMonth() &&
@@ -101,7 +98,6 @@ const CalendarView = (() => {
             row.appendChild(td);
         }
 
-        // Следующий месяц
         while (row.children.length < 7) {
             const td = document.createElement('td');
             td.textContent = nextMonthDay++;
